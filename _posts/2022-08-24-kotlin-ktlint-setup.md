@@ -21,7 +21,7 @@ last_modified_at: 2022-08-29
 
 ### Ktlint? 
 * Ktlint는 Kotlin의 공식 가이드 기반으로 코드 스타일을 검사합니다.
-* 
+
 ### Ktlint 구성 하기 
 * 해당 예제는 Ktlint plugin중 가장 많이 사용되는 jlleitschuh.gradle.ktlint 를 사용합니다. 
  
@@ -92,7 +92,7 @@ kotlin.code.style=official
 #### 4. editor 설정
 * preference → editor → kotlin → set form에서 kotlin style guide를 선택
 
-
+<img src="/assets/images/posts_img/ktlint-setup/ktlint1.png" width="400">
  
 
 
