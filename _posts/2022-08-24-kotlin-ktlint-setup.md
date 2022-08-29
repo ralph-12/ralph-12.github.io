@@ -3,9 +3,9 @@ title: "ktlint"
 excerpt: "ktlint 쉽게 적용하기"
 
 categories:
-  - kotlin
+  - Kotlin
 tags:
-  - [tag1, tag2]
+  - [Kotlin]
 
 permalink: /kotlin/ktlint-setup/
 
