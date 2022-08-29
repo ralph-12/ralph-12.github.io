@@ -3,7 +3,7 @@ title: "ktlint"
 excerpt: "ktlint 쉽게 적용하기"
 
 categories:
-  - categories1
+  - kotlin
 tags:
   - [tag1, tag2]
 
@@ -12,8 +12,8 @@ permalink: /categories1/post-name-here/
 toc: true
 toc_sticky: true
 
-date: 2020-05-21
-last_modified_at: 2021-10-09
+date: 2022-08-24
+last_modified_at: 2022-08-29
 ---
 
 ## Ktlint
