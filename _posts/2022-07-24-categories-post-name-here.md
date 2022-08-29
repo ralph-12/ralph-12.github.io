@@ -1,6 +1,6 @@
 ---
-title: "[포스팅 예시] 이곳에 제목을 입력하세요"
-excerpt: "본문의 주요 내용을 여기에 입력하세요"
+title: "ktlint"
+excerpt: "ktlint 쉽게 적용하기"
 
 categories:
   - categories1
@@ -16,6 +16,13 @@ date: 2020-05-21
 last_modified_at: 2021-10-09
 ---
 
-## 🦥 본문
+## Ktlint
+GitHub - JLLeitschuh/ktlint-gradle: A ktlint gradle plugin 
 
-본문은 여기에 ...
+### Ktlint? 
+Ktlint는 Kotlin의 공식 가이드 기반으로 코드 스타일을 검사합니다. (Kotlin coding conventions) 
+
+개발자는 Git commit 전이나 빌드 단계에서 Koltin의 가이드에서 벗어나는지 확인하여 수정할 수 있습니다.
+
+### Ktlint 구성 하기 
+ Knotkoq은 Ktlint plugin중 가장 많이 사용되는 jlleitschuh.gradle.ktlint 를 사용합니다. 
