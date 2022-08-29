@@ -17,10 +17,8 @@ last_modified_at: 2022-08-29
 ---
 
 ## Ktlint
-<https://github.com/JLLeitschuh/ktlint-gradle> 
-
-### Ktlint? 
 * Ktlint는 Kotlin의 공식 가이드 기반으로 코드 스타일을 검사합니다.
+* [ktint-gradle](https://github.com/JLLeitschuh/ktlint-gradle)
 
 ### Ktlint 구성 하기 
 * 해당 예제는 Ktlint plugin중 가장 많이 사용되는 jlleitschuh.gradle.ktlint 를 사용합니다. 
