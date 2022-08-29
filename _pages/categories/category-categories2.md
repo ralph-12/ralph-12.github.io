@@ -1,9 +1,9 @@
 ---
-title: "Categories2"
+title: "Kotlin"
 layout: category
-permalink: /categories/categories2/
+permalink: /categories/kotlin/
 author_profile: true
-taxonomy: Categories2
+taxonomy: Kotlin
 sidebar:
   nav: "categories"
 ---
