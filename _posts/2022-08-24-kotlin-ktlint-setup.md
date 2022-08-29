@@ -18,13 +18,12 @@ last_modified_at: 2022-08-29
 
 ## Ktlint
 * Ktlint는 Kotlin의 공식 가이드 기반으로 코드 스타일을 검사합니다.
-* [ktint-gradle](https://github.com/JLLeitschuh/ktlint-gradle)
 
 ### Ktlint 구성 하기 
-* 해당 예제는 Ktlint plugin중 가장 많이 사용되는 jlleitschuh.gradle.ktlint 를 사용합니다. 
+* 해당 예제는 Ktlint plugin중 가장 많이 사용되는 [jlleitschuh.gradle.ktlint](https://github.com/JLLeitschuh/ktlint-gradle) 를 사용합니다. 
  
-#### 1. .editconfig 구성하기
-* root 경로에 .editconfig 추가 [editconfig]: https://plugins.jetbrains.com/plugin/7294-editorconfig/
+#### 1) .editconfig 구성하기
+* root 경로에 .editconfig 추가 [editconfig](https://plugins.jetbrains.com/plugin/7294-editorconfig/)
 
 ```
 root = true
@@ -55,7 +54,7 @@ trim_trailing_whitespace = false
 indent_size = 3
 ```
 
-#### 2.  project 단위 build.gradle.kts 설정
+#### 2) project 단위 build.gradle.kts 설정
 ```
 plugins {
   id("org.jlleitschuh.gradle.ktlint") version "<current_version>"
@@ -81,23 +80,23 @@ subprojects {
 }
 ```
 
-#### 3. gradle.properties 설정
+#### 3) gradle.properties 설정
 ```
 # Kotlin code style for this project: "official" or "obsolete":
 kotlin.code.style=official
 ```
 
-#### 4. editor 설정
+#### 4) editor 설정
 * preference → editor → kotlin → set form에서 kotlin style guide를 선택
 
 <img src="/assets/images/posts_img/ktlint-setup/ktlint1.png" width="600">
  
-#### 5. Task 실행해서 Intellij에 적용
+#### 5) Task 실행해서 Intellij에 적용
 ```
 ./gradlew ktlintApplyToIdea
 ```
 
-#### 6. POSIX 명세에 따른 파일의 마지막에 개행문자 자동 추가 설정
+#### 6) POSIX 명세에 따른 파일의 마지막에 개행문자 자동 추가 설정
 
 <img src="/assets/images/posts_img/ktlint-setup/ktlint2.png" width="600">
 
