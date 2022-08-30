@@ -1,6 +1,6 @@
 ---
-title: "ktlint"
-excerpt: "ktlint 쉽게 적용하기"
+title: "ktlint 쉽게 적용하기"
+excerpt: "kotlin 공식 코드 스타일로 검사하는 ktlint 쉽게 적용하기"
 
 categories:
   - Kotlin
