@@ -3,9 +3,9 @@ title: "Hit & Dagger Annotations"
 excerpt: "다양한 Hilt & Dagger Annotation 알아보기"
 
 categories:
-  - android
+  - Android
 tags:
-  - [android]
+  - [Android]
 
 permalink: /android/hilt-dagger-annotations/
 
