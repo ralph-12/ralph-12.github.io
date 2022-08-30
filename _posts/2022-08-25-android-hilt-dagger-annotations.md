@@ -17,6 +17,8 @@ last_modified_at: 2022-08-25
 ---
 
 ## Hilt & Dagger Annotations 알아보기 
+<img src="/assets/images/posts_img/hilt-dagger-annotations/markus-spiske-DnBtFBnqlRc-unsplash.jpg" width="600">
+(https://unsplash.com/photos/DnBtFBnqlRc)
 
 ### Hilt 가 무엇일까요
 * Hilt는 Android 전용 의존성 주입(Dependency Injection) 라이브러리 입니다.
