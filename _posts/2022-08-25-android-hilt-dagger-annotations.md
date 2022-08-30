@@ -1,5 +1,5 @@
 ---
-title: "Hit & Dagger Annotations"
+title: "Hilt & Dagger Annotations"
 excerpt: "다양한 Hilt & Dagger Annotation 알아보기"
 
 categories:
@@ -16,7 +16,7 @@ date: 2022-08-25
 last_modified_at: 2022-08-25
 ---
 
-## 🦥 Hit & Dagger Annotations 알아보기 
+## Hilt & Dagger Annotations 알아보기 
 
 ### Hilt 가 무엇일까요
 * Hilt는 Android 전용 의존성 주입(Dependency Injection) 라이브러리 입니다.
@@ -63,4 +63,5 @@ Hilt는 Dagger를 기반으로 구성되어 있지만 Dagger를 쉽게 사용하
 Compile 단계에서 의존성을 주입하고 에러 검출 또한 Copile 단계에서 발생합니다.
 Hilt는 프로젝트의 모든 Android 클래스에 컨테이너를 제공하고 수명 주기를 자동으로 관리합니다.
 Android developers에서도 가이드를 제공하는 만큼 Android 개발자라면 사용 안 할 이유가 없습니다.
+많은 사용자 수를 가지고 있는 서비스 기업들도 Koin에서 Hilt로 이전 하고 있습니다.
 ```
