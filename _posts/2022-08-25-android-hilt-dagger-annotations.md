@@ -67,3 +67,19 @@ Hilt는 프로젝트의 모든 Android 클래스에 컨테이너를 제공하고
 Android developers에서도 가이드를 제공하는 만큼 Android 개발자라면 사용 안 할 이유가 없습니다.
 많은 사용자 수를 가지고 있는 서비스 기업들도 Koin에서 Hilt로 이전 하고 있습니다.
 ```
+
+## Hilt Annotation 알아보기 
+
+### @HiltAndroidApp
+``` 
+Hilt 코드 생성을 시작합니다. Application 클래스에 주석을 달아야 합니다.
+```
+
+```
+@HiltAndroidApp
+class MyApplication : Application() {
+    override fun onCreate() {
+        super.onCreate()
+    }
+}
+```
