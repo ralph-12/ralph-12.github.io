@@ -71,15 +71,29 @@ Android developers에서도 가이드를 제공하는 만큼 Android 개발자�
 ## Hilt Annotation 알아보기 
 
 ### @HiltAndroidApp
-``` 
-Hilt 코드 생성을 시작합니다. Application 클래스에 주석을 달아야 합니다.
-```
 
-```
+Hilt 코드 생성을 시작합니다. Application 클래스에 주석을 달아야 합니다.
+
+```kotlin
 @HiltAndroidApp
 class MyApplication : Application() {
     override fun onCreate() {
         super.onCreate()
+    }
+}
+```
+
+### @AndroidEntryPoint
+
+객체를 주입할 대상에게 어노테이션을 붙여 member injection를 수행합니다. 
+Activity, Fragment, View, Service, BroadcastReceiver에 사용 가능합니다. 
+
+```kotlin
+@AndroidEntryPoint
+class MainActivity : AppCompatActivity() {
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_main)
     }
 }
 ```
