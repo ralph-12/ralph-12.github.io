@@ -215,4 +215,18 @@ class AnalyticsModule {
 ```
 
 ### @Binds
+@Binds는 @Provides와 다르게 외부라이브러리에는 사용이 불가능합니다.
+또한 인터페이스를 주입이 가능하게 만들 수있습니다. 
+인터페이스를 주입하는 것은 테스트의 용이합니다. 
 
+```kotlin
+@InstallIn(SingletonComponent::class)
+@Module
+abstract class AnalyticsBindModule {
+
+    @Binds
+    abstract fun bindsAnalyticsService(
+        analyticsServiceImpl: AnalyticsServiceImpl
+    ): AnalyticsService
+}
+```
