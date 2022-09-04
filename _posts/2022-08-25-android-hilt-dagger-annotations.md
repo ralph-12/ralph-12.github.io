@@ -184,10 +184,9 @@ Hilt는 아래의 구성요소를 제공합니다.
 |ViewWithFragmentComponent|@WithFragmentBindings 주석이 지정된 View |
 |ServiceComponent         |Service                              |
 
-```
-Hilt는 SingletonComponent에서 직접 broadcast receiver를 삽입하므로 broadcast receiver의 구성요소를 생성하지 않습니다.
 
-```
+Hilt는 SingletonComponent에서 직접 broadcast receiver를 삽입하므로
+broadcast receiver의 구성요소를 생성하지 않습니다.
 
 
 ### @Provides
@@ -230,3 +229,34 @@ abstract class AnalyticsBindModule {
     ): AnalyticsService
 }
 ```
+
+
+## Scope Annotation
+동일한 인스턴스를 제공하기 위해 Scope를 지정해줘야 합니다.
+
+
+### @Singleton
+어플리케이션 전체의 싱글톤 인스턴스를 원하면 @Singleton를 사용해야 합니다.
+
+```kotlin
+
+@Singleton
+class MainAdapter @Inject constructor(
+    private val mainService: MainService
+) { }
+```
+
+
+### @ActivityScoped 
+Activity 생명주기 동안 인스턴스를 제공합니다.
+
+```kotlin
+
+@ActivityScoped
+class AnalyticsAdapter @Inject constructor(
+    private val mainService: MainService
+) { }
+```
+
+
+
