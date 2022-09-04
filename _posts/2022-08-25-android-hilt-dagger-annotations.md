@@ -194,7 +194,7 @@ Hilt는 SingletonComponent에서 직접 broadcast receiver를 삽입하므로 br
 생성자 주입을 할수 없는 유형에 대한 바인딩을 추가 합니다. 
  * 리턴 타입은 바인딩 유형입니다.
  * 매개변수는 종속성입니다.
- * 인스턴스가 필요할 때 
+ * Room과 Retrofit과 같이 외부 라이브러리에서 제공되는 클래스의 인스턴스 생성을 위해 사용합니다.
 
 ```kotlin
 @InstallIn(SingletonComponent::class)
@@ -213,4 +213,6 @@ class AnalyticsModule {
     }
 }
 ```
+
+### @Binds
 
