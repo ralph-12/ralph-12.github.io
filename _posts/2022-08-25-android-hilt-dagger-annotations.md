@@ -258,5 +258,6 @@ class AnalyticsAdapter @Inject constructor(
 ) { }
 ```
 
-
+참고)
+https://developer.android.com/static/images/training/dependency-injection/hilt-annotations.pdf?hl=ko
 
