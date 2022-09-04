@@ -20,14 +20,17 @@ last_modified_at: 2022-08-25
 <img src="/assets/images/posts_img/hilt-dagger-annotations/markus-spiske-DnBtFBnqlRc-unsplash.jpg" width="800">
 (이미지 출처 : https://unsplash.com/photos/DnBtFBnqlRc)
 
+
 ### Hilt 가 무엇일까요
 * Hilt는 Android 전용 의존성 주입(Dependency Injection) 라이브러리 입니다.
 * Hilt는 의존성을 주입하고 수명주기를 자동적으로 관리해주고 있습니다.
+* 
 
 ### DI? 의존성 주입?
 객체가 필요할때 마다 생성을 하면 객체간의 의존성이 커지게 됩니다.
 그렇기 때문에 객체를 직접 생성하는 것이 아닌 외부로 부터 필요한 객체를 받아 사용하게 하는 것을
 의존성 주입이라고 합니다. 
+
 
 ### DI의 장점
 그렇다면 DI를 통해 얻을 수 있는 이점이 무엇일까요?
@@ -35,11 +38,14 @@ last_modified_at: 2022-08-25
  * 객체간의 의존성을 줄이거나 없애고 코드의 재활용성을 높여줍니다.
  * 객체 간의 결합도를 낮추면서 유연한 코드를 개발자는 작성할 수 있게됩니다 😃
 
+
 ### Android에서 DI 선택지 Dagger vs Koin vs Hilt 
 Android 개발자라면 누구나 들어봤을 DI Framework 들이 있습니다. 
 바로 Dagger, Koin, Hilt 인데요. 대략적인 특징을 알아보겠습니다.
 
+
 1) [Dagger](https://github.com/google/dagger)
+
 
 ```
 구글에서 제공하는 라이브러리인 Dagger는 처음엔 Android보다 Java Spring 등의 환경에서
@@ -48,7 +54,9 @@ Android 개발자라면 누구나 들어봤을 DI Framework 들이 있습니다.
 많은 학습비용을 요구한다는 단점이 있습니다. 
 ```
 
+
 2) [Koin](https://insert-koin.io/)
+
 
 ```
 Koin은 코틀린 환경에서 사용할 수 있으며 Kotlin DSL로 구성되어 있습니다.
@@ -58,7 +66,9 @@ Koin은 코틀린 환경에서 사용할 수 있으며 Kotlin DSL로 구성되�
 최근 많은 상용 프로젝트에서도 Koin을 사용하는 것을 볼 수 있습니다.
 ```
 
+
 3) [Hilt](https://developer.android.com/training/dependency-injection/hilt-android?hl=ko)
+
 
 ```
 Hilt는 Dagger를 기반으로 구성되어 있지만 Dagger를 쉽게 사용하게 고안되어 그렇게 높은 학습비용을 요구하지 않습니다.
@@ -68,7 +78,9 @@ Android developers에서도 가이드를 제공하는 만큼 Android 개발자�
 많은 사용자 수를 가지고 있는 서비스 기업들도 Koin에서 Hilt로 이전 하고 있습니다.
 ```
 
-## Hilt Annotation 알아보기 
+
+## 본격적으로 Hilt Annotation 알아보기 
+
 
 ### @HiltAndroidApp
 
@@ -82,6 +94,7 @@ class MyApplication : Application() {
     }
 }
 ```
+
 
 ### @AndroidEntryPoint
 
@@ -98,17 +111,20 @@ class MainActivity : AppCompatActivity() {
 }
 ```
 
+
 ### @Inject 
 
-생성자를 주입 해준다. @Inject Annotaition으로 의존성 인스턴스를 생성하고,
+생성자를 주입해 줍니다. @Inject Annotaition으로 의존성 인스턴스를 생성하고,
 파라미티러 의존성을 주입 받을 수 있습니다. 
+
 
 ```kotlin
 class MainAdapter @Inject constructor(
     private val mainService: MainService
 ) { }
 ```
-MainAdapter.kt
+(MainAdapter.kt)
+
 
 ```kotlin
 @AndroidEntryPoint
@@ -118,7 +134,8 @@ class MainService : Service(){
     }
 }
 ```
-MainService.kt
+(MainService.kt)
+
 
 ### @HiltViewModel
 힐트에게 아키텍처 구성요소인 ViewModel에 인스턴스를 제공하는 법을 알려줍니다. 
@@ -133,4 +150,23 @@ class MainViewModel @Inject constructor(
 ```
 
 
+### @Module
+위의 @Inject를 붙이는 방법 말고도 Module를 이용해 Hilt에게 의존성을 생성하는 방법을 알려줄수 있습니다.
+Hilt가 생성자를 주입할 수 없는 유형에 사용합니다. 
+
+```kotlin
+@InstallIn(SingletonComponent::class)
+@Module
+class AnalyticsModule { }
+```
+
+
+### @InstallIn
+Hilt에서 생성한 DI를 나타냅니다.
+
+```kotlin
+@InstallIn(SingletonComponent::class)
+@Module
+class AnalyticsModule { }
+```
 
