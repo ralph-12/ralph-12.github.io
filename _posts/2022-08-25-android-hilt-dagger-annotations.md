@@ -171,6 +171,6 @@ class AnalyticsModule { }
 ```
 
 Hilt는 아래의 구성요소를 제공합니다.
-| Android 구성 요소 | 결합 요소 |
+|<span style="color:blue"> Android 구성 요소 |<span style="color:blue"> 결합 요소 |
 |---|---|
 |SingletonComponent|Application|
