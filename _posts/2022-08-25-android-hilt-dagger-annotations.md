@@ -171,6 +171,8 @@ class AnalyticsModule { }
 ```
 
 Hilt는 아래의 구성요소를 제공합니다.
+
+
 | Android 구성 요소         |   결합 요소                           |
 |-------------------------|-------------------------------------|
 | SingletonComponent      |Application                          |
@@ -189,4 +191,26 @@ Hilt는 SingletonComponent에서 직접 broadcast receiver를 삽입하므로 br
 
 
 ### @Provides
+생성자 주입을 할수 없는 유형에 대한 바인딩을 추가 합니다. 
+ * 리턴 타입은 바인딩 유형입니다.
+ * 매개변수는 종속성입니다.
+ * 인스턴스가 필요할 때 
+
+```kotlin
+@InstallIn(SingletonComponent::class)
+@Module
+class AnalyticsModule {
+
+    @Provides
+    fun providesAnalyticsService(
+        converterFactory: GsonConverterFactory
+    ): AnalyticsService {
+        return Retrofit.Builder()
+            .baseUrl("https://example.com")
+            .addConverterFactory(converterFactory)
+            .build()
+            .create(AnalyticsService::class.java)
+    }
+}
+```
 
