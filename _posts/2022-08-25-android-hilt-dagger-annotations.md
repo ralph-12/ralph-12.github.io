@@ -97,3 +97,40 @@ class MainActivity : AppCompatActivity() {
     }
 }
 ```
+
+### @Inject 
+
+생성자를 주입 해준다. @Inject Annotaition으로 의존성 인스턴스를 생성하고,
+파라미티러 의존성을 주입 받을 수 있습니다. 
+
+```kotlin
+class MainAdapter @Inject constructor(
+    private val mainService: MainService
+) { }
+```
+MainAdapter.kt
+
+```kotlin
+@AndroidEntryPoint
+class MainService : Service(){
+    override fun onBind(p0: Intent?): IBinder? {
+        TODO("Not yet implemented")
+    }
+}
+```
+MainService.kt
+
+### @HiltViewModel
+힐트에게 아키텍처 구성요소인 ViewModel에 인스턴스를 제공하는 법을 알려줍니다. 
+
+```kotlin
+@HiltViewModel
+class MainViewModel @Inject constructor(
+    private val adapter: MainAdapter,
+    private val state: SavedStateHandle
+) : ViewModel() {}
+
+```
+
+
+
