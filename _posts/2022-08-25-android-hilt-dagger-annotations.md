@@ -171,6 +171,18 @@ class AnalyticsModule { }
 ```
 
 Hilt는 아래의 구성요소를 제공합니다.
-|<span style="color:blue"> Android 구성 요소 |<span style="color:blue"> 결합 요소 |
+| Android 구성 요소 | 결합 요소 |
 |---|---|
 |SingletonComponent|Application|
+|ActivityRetainedComponent|N/A|
+|ViewModelComponent|ViewModel|
+|ActivityComponent|Activity|
+|FragmentComponent|Fragment|
+|ViewComponent|View|
+|ViewWithFragmentComponent|@WithFragmentBindings 주석이 지정된 View|
+|ServiceComponent|Service|
+
+```
+Hilt는 SingletonComponent에서 직접 broadcast receiver를 삽입하므로 broadcast receiver의 구성요소를 생성하지 않습니다.
+
+```
