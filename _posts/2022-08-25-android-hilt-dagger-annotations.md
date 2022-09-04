@@ -170,3 +170,7 @@ Hilt에서 생성한 DI를 나타냅니다.
 class AnalyticsModule { }
 ```
 
+Hilt는 아래의 구성요소를 제공합니다.
+| Android 구성 요소 | 결합 요소 |
+|---|---|
+|SingletonComponent|Application|
