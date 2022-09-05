@@ -1,6 +1,6 @@
 ---
-title: "Kotlin Flow 연산자"
-excerpt: "Kotlin Flow 여러가지 연산자"
+title: "Kotlin Flows 알아보기"
+excerpt: "가깝고 먼 Kotlin Flows 알아보기"
 
 categories:
   - Kotlin
