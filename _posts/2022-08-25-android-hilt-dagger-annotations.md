@@ -258,6 +258,24 @@ class AnalyticsAdapter @Inject constructor(
 ) { }
 ```
 
+
+### @ApplicationContext와 @ActivityContext 
+Hilt는 미리 정의 된 몇가지를 한정자를 제공하는데 어플리케이션 활동에서 Context 클래스가 필요할 때 사용합니다. 
+
+```kotlin
+
+@ActivityScoped
+class AnalyticsAdapter @Inject constructor(
+    @ApplicationContext val context: Context,
+    private val mainService: MainService
+) { }
+```
+
+
+### 
+
+
+
 참고)
 https://developer.android.com/static/images/training/dependency-injection/hilt-annotations.pdf?hl=ko
 
