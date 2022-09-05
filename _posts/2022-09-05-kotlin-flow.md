@@ -74,6 +74,9 @@ fun main() = runBlocking {
 
 
 ### Flows
+List<Int> 결과 유형을 사용하면 한 번에 모든 값만 반환할 수 있다는 의미입니다.   
+비동기식으로 계산되는 값의 스트림을 나타내기 위해 동기식으로 계산된 값에 Sequence<Int> 유형을 사용하는 것처럼 
+Flow<Int> 유형을 사용할 수 있습니다.
 
 ```kotlin
 fun flowsSimple(): Flow<Int> = flow { // flow builder
@@ -98,6 +101,8 @@ fun main() = runBlocking<Unit> {
     }
 }
 ```
+이 코드는 메인 스레드를 차단하지 않고 각 숫자를 인쇄하기 전에 기다린 후 메인 스레드에서 실행되는 별도의 코루틴에서
+100ms마다 "I'm not locked"를 인쇄하여 확인합니다.
 
 ```
 I'm not blocked 1
