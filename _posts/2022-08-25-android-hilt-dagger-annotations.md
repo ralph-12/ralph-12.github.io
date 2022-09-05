@@ -272,8 +272,41 @@ class AnalyticsAdapter @Inject constructor(
 ```
 
 
-### 
+### @EntryPoint
+Hilt 가 지원하지 않는 클래스에서 의존성이 필요한 경우 사용합니다.
 
+```kotlin
+
+class MainContentProvider : ContentProvider() {
+
+    @InstallIn(SingletonComponent::class)
+    @EntryPoint
+    interface MainContentProviderEntryPoint {
+        fun analyticsService(): AnalyticsService
+    }
+
+    override fun query(
+        p0: Uri,
+        p1: Array<out String>?,
+        p2: String?,
+        p3: Array<out String>?,
+        p4: String?
+    ): Cursor? {
+        val appContext =
+            context?.applicationContext
+                ?: throw IllegalStateException()
+        val entryPoint =
+            EntryPointAccessors.fromApplication(
+                appContext,
+                MainContentProviderEntryPoint::class.java
+            )
+        val analyticsService =
+            entryPoint.analyticsService()
+
+        return null
+    }
+}
+```
 
 
 참고)
