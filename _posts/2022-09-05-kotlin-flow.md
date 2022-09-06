@@ -112,3 +112,44 @@ I'm not blocked 2
 I'm not blocked 3
 3
 ```
+  
+### Flows are cold
+시퀸스와 유사한 콜드 스크림입니다. flow 빌더 내부의 코드는 흐름이 수집 되기 전 실행되지 않습니다.
+
+```kotlin
+  
+fun flowsAreCold(): Flow<Int> = flow {
+    println("Flow started")
+    for (i in 1..3) {
+        delay(100)
+        emit(i)
+    }
+}
+
+fun main() = runBlocking<Unit> {
+    println("Calling simple function...")
+    val flow = flowsAreCold()
+    println("Calling collect...")
+    flow.collect { value -> println(value)}
+    println("Calling collect again...")
+    flow.collect { value -> println(value)}
+}
+```
+  
+```
+Calling simple function...
+Calling collect...
+Flow started
+1
+2
+3
+Calling collect again...
+Flow started
+1
+2
+3   
+```
+
+이는 flowsAreColde 함수에 suspend로 표시되지 않는 주요 이유 입니다.
+그 자체로 flowsAreColde() 함수의 호출은 빠르게 반환되고 아무것도 기다지리 않습니다.
+flow는 수집될 때마다 시작되므로 다시 호출될 때 "Flow started"가 출력됩니다.
