@@ -13,7 +13,7 @@ toc: true
 toc_sticky: true
 
 date: 2022-09-05
-last_modified_at: 2022-09-05
+last_modified_at: 2022-09-06
 ---
 
 ## Asynchronous Flow
@@ -153,3 +153,37 @@ Flow started
 이는 flowsAreColde 함수에 suspend로 표시되지 않는 주요 이유 입니다.
 그 자체로 flowsAreColde() 함수의 호출은 빠르게 반환되고 아무것도 기다지리 않습니다.
 flow는 수집될 때마다 시작되므로 다시 호출될 때 "Flow started"가 출력됩니다.
+
+
+### Flow cancellation basics
+Flow는 코루틴의 일반적인 협력 취소를 따릅니다. 평소와 같이 취소 가능한 일시 중단 기능(예: delay)에서 흐름이 일시 중단되면 흐름 수집이 취소될 수 있습니다. 다음 예제는 withTimeoutOrNull 블록에서 실행될 때 흐름이 시간 초과 시 취소되고 코드 실행을 중지하는 방법을 보여줍니다.
+ 
+```kotlin
+  
+fun flowCancellationBasics(): Flow<Int> = flow {
+    for (i in 1..3) {
+        delay(100)
+        println("Emitting $i")
+        emit(i)
+    }
+}
+
+fun main() = runBlocking<Unit> {
+    withTimeoutOrNull(250) {
+        flowCancellationBasics().collect { value -> println(value) }
+    }
+    println("Done")
+}
+```
+
+단순 함수의 흐름에서 두 개의 숫자만 내보내고 다음 출력을 생성하는 방법에 주목하세요.
+  
+```
+Emitting 1
+1
+Emitting 2
+2
+Done
+```
+
+
