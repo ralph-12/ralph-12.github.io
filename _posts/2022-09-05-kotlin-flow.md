@@ -186,4 +186,22 @@ Emitting 2
 Done
 ```
 
+### Flow builders
+이전 예제의 flow { ... } 빌더가 가장 기본적인 것입니다. flow를 더 쉽게 선언할 수 있는 다른 빌더가 있습니다.
 
+* 고정된 값 집합을 내보내는 흐름을 정의하는 flowOf 빌더입니다.
+* .asFlow() 확장 함수를 사용하여 다양한 컬렉션과 시퀀스를 흐름으로 변환할 수 있습니다.
+
+```kotlin
+
+// Convert an integer range to a flow
+fun main() = runBlocking<Unit> {
+    (1..3).asFlow().collect { value -> println(value) }
+}
+```
+
+```
+1
+2
+3
+```
