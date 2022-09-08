@@ -114,7 +114,7 @@ I'm not blocked 3
 ```
   
 ### Flows are cold
-시퀸스와 유사한 콜드 스크림입니다. flow 빌더 내부의 코드는 흐름이 수집 되기 전 실행되지 않습니다.
+시퀸스와 유사한 콜드 스크림입니다. flow 빌더 내부의 코드는 flow가 수집 되기 전 실행되지 않습니다.
 
 ```kotlin
   
@@ -176,7 +176,7 @@ fun main() = runBlocking<Unit> {
 }
 ```
 
-단순 함수의 흐름에서 두 개의 숫자만 내보내고 다음 출력을 생성하는 방법에 주목하세요.
+단순 함수의 flow에서 두 개의 숫자만 내보내고 다음 출력을 생성하는 방법에 주목하세요.
   
 ```
 Emitting 1
@@ -189,8 +189,8 @@ Done
 ### Flow builders
 이전 예제의 flow { ... } 빌더가 가장 기본적인 것입니다. flow를 더 쉽게 선언할 수 있는 다른 빌더가 있습니다.
 
-* 고정된 값 집합을 내보내는 흐름을 정의하는 flowOf 빌더입니다.
-* .asFlow() 확장 함수를 사용하여 다양한 컬렉션과 시퀀스를 흐름으로 변환할 수 있습니다.
+* 고정된 값 집합을 내보내는 flow를 정의하는 flowOf 빌더입니다.
+* .asFlow() 확장 함수를 사용하여 다양한 컬렉션과 시퀀스를 flow로 변환할 수 있습니다.
 
 ```kotlin
 
@@ -207,11 +207,11 @@ fun main() = runBlocking<Unit> {
 ```
 
 ### Intermediate flow operators
-collections 및 sequences와 마찬가지로 연산자를 사용하여 흐름을 변환할 수 있습니다. 중간 연산자는 업스트림 흐름에 적용되고 다운스트림 흐름을 반환합니다. 이 연산자는 흐름이 그렇듯이 차갑습니다. 빠르게 작동하여 새로운 변환된 흐름의 정의를 반환합니다.
+collections 및 sequences와 마찬가지로 연산자를 사용하여 flow를 변환할 수 있습니다. 중간 연산자는 업스트림 flow에 적용되고 다운스트림 flow를 반환합니다. 이 연산자는 flow가 그렇듯이 차갑습니다. 빠르게 작동하여 새로운 변환된 flow의 정의를 반환합니다.
 
 기본 연산자는 map와 filter와 같은 익숙한 이름을 가지고 있습니다. sequences와 중요한 차이점은 이러한 연산자 내부의 코드 블록이 일시 중단 함수를 호출할 수 있습니다.
  
-예를 들어 요청을 수행하는 것이 일시 중단 기능에 의해 구현되는 장기 실행 작업인 경우에도 들어오는 요청의 흐름을 map 연산자를 사용하여 결과에 매핑할 수 있습니다.
+예를 들어 요청을 수행하는 것이 일시 중단 기능에 의해 구현되는 장기 실행 작업인 경우에도 들어오는 요청의 flow를 map 연산자를 사용하여 결과에 매핑할 수 있습니다.
 
 ```kotlin
 
@@ -230,5 +230,37 @@ fun main() = runBlocking<Unit> {
 ```
 response 1
 response 2
+response 3
+```
+
+### Transform operator
+
+flow 변환 연산자 중 가장 일반적인 것은 transform이라고 합니다. map 및 filter와 같은 간단한 변환을 모방하고 더 복잡한 변환을 구현하는 데 사용할 수 있습니다. transform 연산자를 사용하여 임의의 값을 임의의 횟수만큼 방출할 수 있습니다.
+
+예를 들어, 변환을 사용하여 장기 실행 비동기 요청을 수행하기 전에 문자열을 내보내고 응답을 따라갈 수 있습니다.
+
+```kotlin
+
+suspend fun transformOperator() {
+
+    (1..3).asFlow() // a flow requests
+        .transform { request ->
+            emit("Making request $request")
+            emit(performRequest(request))
+        }
+        .collect { response -> println(response) }
+}
+
+fun main() = runBlocking{
+    transformOperator()
+}
+```
+
+```
+Making request 1
+response 1
+Making request 2
+response 2
+Making request 3
 response 3
 ```
