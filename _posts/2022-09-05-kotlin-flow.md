@@ -205,3 +205,30 @@ fun main() = runBlocking<Unit> {
 2
 3
 ```
+
+### Intermediate flow operators
+collections 및 sequences와 마찬가지로 연산자를 사용하여 흐름을 변환할 수 있습니다. 중간 연산자는 업스트림 흐름에 적용되고 다운스트림 흐름을 반환합니다. 이 연산자는 흐름이 그렇듯이 차갑습니다. 빠르게 작동하여 새로운 변환된 흐름의 정의를 반환합니다.
+
+기본 연산자는 map와 filter와 같은 익숙한 이름을 가지고 있습니다. sequences와 중요한 차이점은 이러한 연산자 내부의 코드 블록이 일시 중단 함수를 호출할 수 있습니다.
+ 
+예를 들어 요청을 수행하는 것이 일시 중단 기능에 의해 구현되는 장기 실행 작업인 경우에도 들어오는 요청의 흐름을 map 연산자를 사용하여 결과에 매핑할 수 있습니다.
+
+```kotlin
+
+suspend fun performRequest(request: Int): String {
+    delay(1000)
+    return "response $request"
+}
+
+fun main() = runBlocking<Unit> {
+    (1..3).asFlow()
+        .map { request -> performRequest(request) }
+        .collect { response -> println(response)}
+}
+```
+
+```
+response 1
+response 2
+response 3
+```
