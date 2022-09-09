@@ -265,3 +265,34 @@ Making request 3
 response 3
 ```
 
+### Size-limiting operators
+
+take와 같은 크기 제한 중간 연산자는 해당 제한에 도달하면 flow 실행을 취소합니다. 코루틴의 취소는 항상 예외를 throw하여 수행됩니다.
+모든 리소스 관리 기능(예: try { ... } finally { ... } 블록)은 취소 시 정상적으로 작동합니다.
+
+```kotlin
+fun numbers(): Flow<Int> = flow<Int> {
+    try {
+        emit(1)
+        emit(2)
+        println("This line will not execute")
+        emit(3)
+    } finally {
+        println("Finally in numbers")
+    }
+}
+
+fun main() = runBlocking {
+    numbers()
+        .take(2)
+        .collect { value -> println(value) }
+}
+```
+
+이 코드의 출력은 두 번째 숫자를 emit한 후 numbers() 함수에서 flow { ... } 본문의 실행이 중지되었음을 명확하게 보여줍니다.
+
+```
+1
+2
+Finally in numbers
+```
