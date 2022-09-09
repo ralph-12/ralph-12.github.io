@@ -147,6 +147,8 @@ fun main() = runBlocking<Unit> {
 Collected in 1239 ms
 ```
 
+flow에서 ```buffer``` 연산자를 사용하여 순차적으로 실행하는 대신 코드 수집과 동시에 간단한 flow의 방출 코드를 실행할 수 있습니다.
+
 ```kotlin
 fun main() = runBlocking<Unit> {
     val time = measureTimeMillis {
