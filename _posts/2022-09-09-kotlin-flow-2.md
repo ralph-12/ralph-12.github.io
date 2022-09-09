@@ -1,0 +1,28 @@
+---
+title: "Kotlin Flows 알아보기 2"
+excerpt: "가깝고 먼 Kotlin Flows 알아보기 2편"
+
+categories:
+  - Kotlin
+tags:
+  - [Kotlin]
+
+permalink: /kotlin/kotlin-flow-2/
+
+toc: true
+toc_sticky: true
+
+date: 2022-09-09
+last_modified_at: 2022-09-09
+---
+
+### Flow context
+flow 수집은 항상 호출 coroutine의 context에서 발생합니다. 
+예를 들어, ```simple``` flow가 있는 경우 다음 코드는 ```simple``` flow의 구현 세부 정보에 관계없이 이 코드 작성자가 지정한 context에서 실행됩니다.
+
+flow의 이 속성을 context 보존이라고 합니다.
+
+따라서 기본적으로 flow { ... } 빌더의 코드는 해당 flow의 수집기가 제공하는 context에서 실행됩니다.
+
+아래는 호출된 스레드를 인쇄하고 세 개의 숫자를 내보내는 ```simple``` 함수입니다.
+
