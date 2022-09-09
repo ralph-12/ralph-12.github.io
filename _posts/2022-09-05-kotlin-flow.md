@@ -296,3 +296,30 @@ fun main() = runBlocking {
 2
 Finally in numbers
 ```
+
+### Terminal flow operators
+
+terminal flow 연산자는 flow 컬렉션을 시작하는 함수를 일시 중단합니다. collect 연산자는 가장 기본적인 연산자이지만 더 쉽게 만들 수 있는 다른 터미널 연산자가 있습니다.
+
+* toList 및 toSet과 같은 다양한 컬렉션으로의 변환
+* 첫 번째 값을 가져오고 flow가 단일 값을 내보내도록 하는 연산자입니다.
+* reduce 및 fold를 사용하여 flow를 값으로 줄여줍니다.
+* reduce는 주어진 연산을 누적시키면서 최종값을 반환합니다.
+* fold는 초기 값을 입력받아 주어진 operation을 이용하여 누적시키면서 최종값을 반환합니다. 
+  
+```kotlin
+fun main() = runBlocking {
+    val sum = (1..5).asFlow()
+        .map { it * it } // squares of numbers from 1 to 5
+        .reduce { a, b -> a + b }
+
+    println(sum)
+}
+```
+
+```
+55
+```
+
+
+
