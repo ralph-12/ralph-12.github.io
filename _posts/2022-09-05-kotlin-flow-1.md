@@ -1,13 +1,13 @@
 ---
 title: "Kotlin Flows 알아보기 1"
-excerpt: "가깝고 먼 Kotlin Flows 알아보기"
+excerpt: "가깝고 먼 Kotlin Flows 알아보기 1편"
 
 categories:
   - Kotlin
 tags:
   - [Kotlin]
 
-permalink: /kotlin/kotlin-flow/
+permalink: /kotlin/kotlin-flow-1/
 
 toc: true
 toc_sticky: true
