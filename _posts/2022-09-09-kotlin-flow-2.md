@@ -115,3 +115,56 @@ fun log(msg: String) = println("[${Thread.currentThread().name}] $msg")
 여기서 관찰해야 할 또 다른 사항은 flowOn 연산자가 flow의 기본 순차 특성을 변경했다는 것입니다.
 이제 수집은 하나의 coroutine("coroutine#1")에서 발생하고 방출은 수집 coroutine과 동시에 다른 스레드에서 실행 중인 다른 coroutine("coroutine#2")에서 발생합니다.
 
+
+### Buffering
+다른 Coroutine에서 flow의 다른 부분을 실행하는 것은 flow를 수집하는 데 걸리는 전체 시간의 관점에서, 특히 장기 실행 비동기 작업이 관련된 경우 도움이 될 수 있습니다.
+
+```kotlin
+fun buffering(): Flow<Int> = flow {
+    for (i in 1..3) {
+        delay(100)
+        emit(i)
+    }
+}
+
+fun main() = runBlocking<Unit> {
+    val time = measureTimeMillis {
+        buffering().collect { value ->
+            delay(300)
+            println(value)
+        }
+    }
+    println("Collected in $time ms")
+}
+```
+
+전체 컬렉션에 약 1200ms(3개의 숫자, 각각 400ms)가 소요됩니다.
+
+```
+1
+2
+3
+Collected in 1239 ms
+```
+
+```kotlin
+fun main() = runBlocking<Unit> {
+    val time = measureTimeMillis {
+        simpleBuffering()
+            .buffer() // buffer emissions, don't wait
+            .collect { value ->
+                delay(300) // pretend we are processing it for 300 ms
+                println(value)
+            }
+    }
+    println("Collected in $time ms")
+}
+```
+
+이렇게 하면 실행하는 데 약 1000ms가 걸립니다.
+```
+1
+2
+3
+Collected in 1041 ms
+```
