@@ -26,3 +26,25 @@ flow의 이 속성을 context 보존이라고 합니다.
 
 아래는 호출된 스레드를 인쇄하고 세 개의 숫자를 내보내는 ```simple``` 함수입니다.
 
+```kotlin
+fun simple(log: String): Flow<Int> = flow {
+    println("[${Thread.currentThread().name}] Started $log flow")
+    for (i in 1..3) {
+        emit(i)
+    }
+}
+
+fun main() = runBlocking {
+    simple("simple").collect { value ->
+        println("[${Thread.currentThread().name}] Collected $value")
+    }
+}
+```
+
+```
+Started simple flow
+[main] Started simple flow
+[main] Collected 1
+[main] Collected 2
+[main] Collected 3
+```
