@@ -13,12 +13,14 @@ toc: true
 toc_sticky: true
 
 date: 2022-09-05
-last_modified_at: 2022-09-06
+last_modified_at: 2022-09-09
 ---
 
 ## Asynchronous Flow
 suspand 함수는 단일 값을 비동기적으로 반환하지만 어떻게 여러개의 값을 반환할 수 있을까요?
-Kotlin Flows가 이를 해결해 줍니다.
+Kotlin Flows가 이를 해결해 줍니다. 
+
+이 포스트는[kotlinlang.org](https://kotlinlang.org/docs/flow.html)의 예제에 관한 글입니다.
 
 
 ### Representing multiple values
