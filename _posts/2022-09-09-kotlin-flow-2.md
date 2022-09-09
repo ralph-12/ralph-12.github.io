@@ -48,3 +48,6 @@ Started simple flow
 [main] Collected 2
 [main] Collected 3
 ```
+
+simple().collect는 메인 쓰레드에서 호출되기 때문에 simple의 flow 바디도 메인 쓰레드에서 호출됩니다.
+이것은 실행 context를 신경 쓰지 않고 호출자를 차단하지 않는 빠르게 실행되는 또는 비동기 코드에 대한 완벽한 기본값입니다.
