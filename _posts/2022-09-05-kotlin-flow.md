@@ -1,5 +1,5 @@
 ---
-title: "Kotlin Flows 알아보기"
+title: "Kotlin Flows 알아보기 1"
 excerpt: "가깝고 먼 Kotlin Flows 알아보기"
 
 categories:
