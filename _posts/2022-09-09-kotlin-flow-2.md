@@ -80,3 +80,32 @@ Exception in thread "main" java.lang.IllegalStateException: Flow invariant is vi
 		Please refer to 'flow' documentation or use 'flowOn' instead
 	at...
 ```
+
+### flowOn operator 
+
+```kotlin
+fun flowOnOperator(): Flow<Int> = flow {
+    for (i in 1..3) {
+        Thread.sleep(100)
+        log("Emitting $i")
+        emit(i)
+    }
+}.flowOn(Dispatchers.Default)
+
+fun main() = runBlocking<Unit> {
+    flowOnOperator().collect { value ->
+        log("Collected $value")
+    }
+}
+
+fun log(msg: String) = println("[${Thread.currentThread().name}] $msg")
+```
+
+```
+[DefaultDispatcher-worker-1] Emitting 1
+[main] Collected 1
+[DefaultDispatcher-worker-1] Emitting 2
+[main] Collected 2
+[DefaultDispatcher-worker-1] Emitting 3
+[main] Collected 3
+```
