@@ -170,3 +170,39 @@ fun main() = runBlocking<Unit> {
 3
 Collected in 1041 ms
 ```
+
+### Conflation
+
+flow가 작업 또는 작업 상태 업데이트의 일부 결과만 나타내야하는 경우에는 가장 최근 값만 처리할 수 있습니다.
+이 경우에 ```conflate``` 연산자를 사용하여 중간 값을 건너뛸 수 있습니다.
+
+```kotlin
+fun conflation(): Flow<Int> = flow {
+    for (i in 1..3) {
+        delay(100)
+        emit(i)
+    }
+}
+
+fun main() = runBlocking<Unit> {
+    val time = measureTimeMillis {
+        conflation()
+            .conflate() // conflate emissions, don't process each one
+            .collect { value ->
+                delay(300) // pretend we are processing it for 300 ms
+                println(value)
+            }
+    }
+    println("Collected in $time ms")
+}
+```
+
+1이 처리 되는 동안 2, 3의 번호도 합쳐져 가장 최근인 3만 방출됨을 볼수 있습니다. 
+```
+1
+3
+Collected in 736 ms
+```
+
+
+
