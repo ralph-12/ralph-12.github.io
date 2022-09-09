@@ -83,6 +83,8 @@ Exception in thread "main" java.lang.IllegalStateException: Flow invariant is vi
 
 ### flowOn operator 
 
+아래의 예는 flow context를 변경하는 올바른 방법입니다.
+
 ```kotlin
 fun flowOnOperator(): Flow<Int> = flow {
     for (i in 1..3) {
@@ -109,3 +111,7 @@ fun log(msg: String) = println("[${Thread.currentThread().name}] $msg")
 [DefaultDispatcher-worker-1] Emitting 3
 [main] Collected 3
 ```
+
+여기서 관찰해야 할 또 다른 사항은 flowOn 연산자가 flow의 기본 순차 특성을 변경했다는 것입니다.
+이제 수집은 하나의 coroutine("coroutine#1")에서 발생하고 방출은 수집 coroutine과 동시에 다른 스레드에서 실행 중인 다른 coroutine("coroutine#2")에서 발생합니다.
+
