@@ -225,7 +225,7 @@ fun main() = runBlocking<Unit> {
 }
 ```
 
-블록의 모든 값에 대해 실행되지만 마지막 값에 대해서만 Done이 출력
+블록의 모든 값에 대해 실행되지만 마지막 값에 대해서만 Done이 출력되는 것을 확인 할 수 있습니다. 
 ```
 Collecting 1
 Collecting 2
