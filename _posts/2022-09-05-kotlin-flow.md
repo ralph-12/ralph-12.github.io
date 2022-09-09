@@ -321,5 +321,42 @@ fun main() = runBlocking {
 55
 ```
 
+### Flows are sequential
+여러 flow에서 작동하는 특수 연산자를 사용하지 않는 한 flow의 각 개별 collection은 순차적으로 수행됩니다.
+collection은 terminal 연산자를 호출하는 coroutine에서 직접 작동합니다. 기본적으로 새로운 coroutine에서 실행되지 않습니다.
+내보낸 각 값은 모든 중간 운영자가 업스트림에서 다운스트림으로 처리한 후 terminal 운영자에게 전달됩니다.
+
+
+```kotlin
+fun main() = runBlocking<Unit> {
+    (1..5).asFlow()
+        .filter {
+            println("Filter $it")
+            it % 2 ==0
+        }
+        .map {
+            println("Map $it")
+            "string $it"
+        }.collect {
+            println("Collect $it")
+        }
+}
+```
+
+예제에 따르면 짝수 정수를 filter하고 문자열에 map하고 있습니다. 
+
+```
+Filter 1
+Filter 2
+Map 2
+Collect string 2
+Filter 3
+Filter 4
+Map 4
+Collect string 4
+Filter 5
+```
+
+
 
 
