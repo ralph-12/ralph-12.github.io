@@ -51,3 +51,32 @@ Started simple flow
 
 simple().collect는 메인 쓰레드에서 호출되기 때문에 simple의 flow 바디도 메인 쓰레드에서 호출됩니다.
 이것은 실행 context를 신경 쓰지 않고 호출자를 차단하지 않는 빠르게 실행되는 또는 비동기 코드에 대한 완벽한 기본값입니다.
+
+
+### Wrong emission withContext
+
+그러나 ```long-running CPU-consuming``` 코드는 Dispatchers.Default의 context에서 실행되어야 하고 UI 업데이트 코드는 Dispatchers.Main의 context에서 실행되어야 할 수 있습니다. 일반적으로 withContext는 Kotlin coroutine을 사용하여 코드의 context를 변경하는 데 사용되지만 flow { ... } 빌더의 코드는 context 보존 속성을 준수해야 하며 다른 context에서 내보내는 것이 허용되지 않습니다.
+
+```kotlin
+fun wrongFlowSimple(): Flow<Int> = flow {
+    // The WRONG way to change context for CPU-consuming code in flow builder
+    kotlinx.coroutines.withContext(Dispatchers.Default) {
+        for (i in 1..3) {
+            Thread.sleep(100) // pretend we are computing it in CPU-consuming way
+            emit(i) // emit next value
+        }
+    }
+}
+
+fun main() = runBlocking<Unit> {
+    wrongFlowSimple().collect { value -> println(value) }
+}
+```
+
+```
+Exception in thread "main" java.lang.IllegalStateException: Flow invariant is violated:
+		Flow was collected in [BlockingCoroutine{Active}@72e9360e, BlockingEventLoop@63b1d598],
+		but emission happened in [DispatchedCoroutine{Active}@71bdfe1a, Dispatchers.Default].
+		Please refer to 'flow' documentation or use 'flowOn' instead
+	at...
+```
