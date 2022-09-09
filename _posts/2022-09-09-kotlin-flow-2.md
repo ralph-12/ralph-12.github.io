@@ -204,5 +204,35 @@ fun main() = runBlocking<Unit> {
 Collected in 736 ms
 ```
 
+### Processing the latest value 
+
+위에서 알아 본 Conflation은 ```emitter```와 가 모두 느릴 때 처리 속도를 높이는 한 가지 방법입니다. 
+이와 다른 방법으로는 느린 collector를 취소하고 새값이 방출될때 마다 다시 시작하는 것입니다.
+
+위의 예제에서 conflate 함수를 collectLatest로 바꿔보겠습니다.
+
+```kotlin
+fun main() = runBlocking<Unit> {
+    val time = measureTimeMillis {
+        latest()
+            .collectLatest { value -> // cancel & restart on the latest value
+                println("Collecting $value")
+                delay(300) // pretend we are processing it for 300 ms
+                println("Done $value")
+            }
+    }
+    println("Collected in $time ms")
+}
+```
+
+블록의 모든 값에 대해 실행되지만 마지막 값에 대해서만 Done이 출력
+```
+Collecting 1
+Collecting 2
+Collecting 3
+Done 3
+Collected in 642 ms
+```
+
 
 
