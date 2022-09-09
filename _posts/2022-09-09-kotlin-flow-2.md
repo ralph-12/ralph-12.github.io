@@ -206,8 +206,8 @@ Collected in 736 ms
 
 ### Processing the latest value 
 
-위에서 알아 본 Conflation은 ```emitter```와 가 모두 느릴 때 처리 속도를 높이는 한 가지 방법입니다. 
-이와 다른 방법으로는 느린 collector를 취소하고 새값이 방출될때 마다 다시 시작하는 것입니다.
+위에서 알아 본 Conflation은 ```emitter```와 ```collector```가 모두 느릴 때 처리 속도를 높이는 한 가지 방법입니다. 
+이와 다른 방법으로는 느린 ```collector```를 취소하고 새값이 방출될때 마다 다시 시작하는 것입니다.
 
 위의 예제에서 conflate 함수를 collectLatest로 바꿔보겠습니다.
 
