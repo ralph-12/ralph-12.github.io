@@ -120,3 +120,51 @@ fun main() = runBlocking<Unit> {
 3: First at 1338 ms from start
 3: Second at 1840 ms from start
 ```
+
+#### flatMapMerge 
+또다른 병합 모드 연산자로는 ```flatMapMerge```로 모든 흐름을 동시에 수집해서 단일값으로 병합하여 빠르게 방출합니다. 
+
+```kotlin
+fun main() = runBlocking<Unit> {
+    val startTime = System.currentTimeMillis() // remember the start time
+    (1..3).asFlow().onEach { delay(100) } // a number every 100 ms
+        .flatMapMerge { requestFlow(it) }
+        .collect { value -> // collect and print
+            println("$value at ${System.currentTimeMillis() - startTime} ms from start")
+        }
+}
+```
+아래 출력값을 확인하면 ```flatMapMerge```는 변환을 병렬로 수행함을 알수 있습니다.
+```
+1: First at 136 ms from start
+2: First at 238 ms from start
+3: First at 344 ms from start
+1: Second at 641 ms from start
+2: Second at 744 ms from start
+3: Second at 852 ms from start
+```
+
+#### flatMapLatest
+```flatMapLatest```는 새로운 flow가 방출될 때 직전 flow를 취소합니다. ```collectLatest와 동작이 유사합니다. 
+
+```kotlin
+fun main() = runBlocking<Unit> {
+    val startTime = System.currentTimeMillis()
+    (1..3).asFlow().onEach { delay(100) }
+        .flatMapLatest { requestFlow(it) }
+        .collect { value ->
+            println("$value at ${System.currentTimeMillis() - startTime} ms from start")
+        }
+}
+```
+
+```flatMapLatest```는 새 값이 방출되면 그 실행 블록 ({ requestFlow(it) }) 전체를 취소합니다. 
+```
+1: First at 133 ms from start
+2: First at 239 ms from start
+3: First at 345 ms from start
+3: Second at 850 ms from start
+```
+
+
+
