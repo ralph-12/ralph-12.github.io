@@ -94,7 +94,7 @@ flow는 비동기적으로 수신된 값 시퀀스를 나타내므로 각 값이
 #### flatMapConcat
 ```flatMapConcat```은 여러 flow를 연결하는 연산자입니다. flow 간에 연결이 필요한 경우에 사용합니다.
 
-```
+```kotlin
 fun requestFlow(i: Int): Flow<String> = flow {
     emit("$i: First")
     delay(500) // wait 500 ms
