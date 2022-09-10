@@ -1,9 +1,9 @@
 ---
-title: "Categories3"
+title: "Data Structure"
 layout: category
-permalink: /categories/categories3/
+permalink: /categories/data-structure/
 author_profile: true
-taxonomy: Categories3
+taxonomy: Data Structure
 sidebar:
-  nav: "categories"
+  nav: "data structure"
 ---
