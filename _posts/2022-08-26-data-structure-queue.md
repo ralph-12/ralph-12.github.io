@@ -17,7 +17,7 @@ last_modified_at: 2022-09-10
 ---
 
 <img src="/assets/images/posts_img/data-structure-queue/zichao-zhang-ZAbIO5eas9Q-unsplash.jpg" width="600">
-(https://unsplash.com/photos/ZAbIO5eas9Q)
+[Photo by Zichao Zhang](https://unsplash.com/photos/ZAbIO5eas9Q)
 
 ## Queue
 
