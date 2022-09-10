@@ -87,3 +87,36 @@ fun main() = runBlocking<Unit> {
 3 -> three at 1236 ms from start
 ```
 
+### Flattening flows
+
+flow는 비동기적으로 수신된 값 시퀀스를 나타내므로 각 값이 다른 값 시퀀스에 대한 요청을 트리거하는 상황에 쉽게 도달할 수 있습니다.
+
+#### flatMapConcat
+```flatMapConcat```은 여러 flow를 연결하는 연산자입니다. flow 간에 연결이 필요한 경우에 사용합니다.
+
+```
+fun requestFlow(i: Int): Flow<String> = flow {
+    emit("$i: First")
+    delay(500) // wait 500 ms
+    emit("$i: Second")
+}
+
+fun main() = runBlocking<Unit> {
+    val startTime = currentTimeMillis() // remember the start time
+    (1..3).asFlow().onEach { delay(100) } // a number every 100 ms
+        .flatMapConcat { requestFlow(it) }
+        .collect { value -> // collect and print
+            println("$value at ${currentTimeMillis() - startTime} ms from start")
+        }
+}
+```
+
+출력결과를 확인하면 ```flatMapConcat```은 flow를 생성해 또 다른 생성된 flow와 합쳐 하나의 flow로 만들어냅니다.
+```
+1: First at 118 ms from start
+1: Second at 624 ms from start
+2: First at 731 ms from start
+2: Second at 1233 ms from start
+3: First at 1338 ms from start
+3: Second at 1840 ms from start
+```
