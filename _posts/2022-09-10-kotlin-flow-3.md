@@ -23,7 +23,7 @@ last_modified_at: 2022-09-10
 
 #### Zip
 
-Kotlin 표준 라이브러리의 Sequence.zip 확장 함수와 마찬가지로 flow에는 두 flow의 해당 값을 결합하는 ```zip``` 연산자가 있습니다.
+Kotlin 표준 라이브러리의 ```Sequence.zip``` 확장 함수와 마찬가지로 flow에는 두 flow의 해당 값을 결합하는 ```zip``` 연산자가 있습니다.
 
 ```kotlin
 fun main() = runBlocking {
@@ -40,3 +40,9 @@ fun main() = runBlocking {
 2 -> two
 3 -> three
 ```
+
+#### Combine
+
+flow이 변수 또는 연산의 가장 최근 값을 나타낼 때(Conflation 참조), 해당 flow의 가장 최근 값에 따라 계산을 수행하고 업스트림 중 하나가 발생할 때마다 이를 다시 계산해야 할 수 있습니다. 해당 연산자를 combine이라고 합니다. 
+
+
