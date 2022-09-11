@@ -13,7 +13,7 @@ toc: true
 toc_sticky: true
 
 date: 2022-09-10
-last_modified_at: 2022-09-10
+last_modified_at: 2022-09-11
 ---
 
 
@@ -166,5 +166,74 @@ fun main() = runBlocking<Unit> {
 3: Second at 850 ms from start
 ```
 
+### Flow exceptions
+
+코드에서 예외가 발생하면 flow 수집이 예외와 함께 완료될 수 있습니다. 
+예외를 처리하는 방법에는 여러가지가 있습니다.
 
 
+#### Collector try and catch 
+kotlin의 try/catch 블록을 사용하여 예외를 처리할 수 있습니다.
+
+```kotlin
+fun collectorTryNCatch(): Flow<Int> = flow {
+    for (i in 1..3) {
+        println("Emitting $i")
+        emit(i) // emit next value
+    }
+}
+
+fun main() = runBlocking {
+    try {
+        collectorTryNCatch().collect { value ->
+            println(value)
+            check(value <= 1) { "Collected $value" }
+        }
+    } catch (e: Throwable) {
+        println("Exception $e")
+    }
+}
+```
+
+```
+Emitting 1
+1
+Emitting 2
+2
+Exception java.lang.IllegalStateException: Collected 2
+```
+
+#### Everything is Caught
+
+위의 예제는 ```emitter```에서 발생하는 어떤 exception도 포착합니다.
+```map```을 통해 방출되는 값을 strings로 변경해 봅시다. 
+
+```kotlin
+fun everythingIsCaught(): Flow<String> = flow {
+    for (i in 1..3) {
+        println("Emitting $i")
+        emit(i)
+    }
+}
+    .map { value ->
+        check(value <= 1) { "Crashed on $value" }
+        "string $value"
+    }
+
+fun main() = runBlocking<Unit> {
+    try {
+        everythingIsCaught().collect{ value ->
+            println(value)
+        }
+    } catch (e: Throwable) {
+        println("Exception $e")
+    }
+}
+```
+아래와 같이 출력합니다. 
+```
+Emitting 1
+string 1
+Emitting 2
+Exception java.lang.IllegalStateException: Crashed on 2
+```
