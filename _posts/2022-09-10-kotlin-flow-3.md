@@ -309,7 +309,7 @@ fun main() = runBlocking<Unit> {
 }
 ```
 
-이제 "Caught ..." 메시지가 출력되어 명시적으로 try/catch 블록을 사용하지 않고도 모든 예외를 catch할 수 있습니다.
+이제 "Catch ..." 메시지가 출력되어 명시적으로 try/catch 블록을 사용하지 않고도 모든 예외를 catch할 수 있습니다.
 ```
 Emitting 1
 1
