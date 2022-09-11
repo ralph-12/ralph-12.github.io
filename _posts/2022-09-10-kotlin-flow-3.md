@@ -237,3 +237,82 @@ string 1
 Emitting 2
 Exception java.lang.IllegalStateException: Crashed on 2
 ```
+
+### Exception transparency
+
+예외 처리 동작을 어떻게 캡슐화 할까요 
+
+```emitter```는 이 예외 투명도를 유지하고 예외 처리의 캡슐화를 허용하는 ```catch``` 연산자를 사용할 수 있습니다. 
+```catch``` 연산자의 본문은 예외를 분석하고 포착된 예외에 따라 다양한 방식으로 대응할 수 있습니다.
+
+* 예외는 ```throw```를 사용하여 다시 ```throw```될 수 있습니다.
+* catch의 body에서 예외를 방출할 수 있습니다.
+* 예외는 다른 코드에서 무시, 로그, 처리될 수 있습니다.
+
+예를 들어 예외를 잡아낼 때 텍스트를 내보냅니다.
+
+```kotlin
+simple()
+    .catch { e -> emit("Caught $e") } // emit on exception
+    .collect { value -> println(value) }
+```
+
+#### Transparent catch
+
+catch 중간 연산자는 업스트림 예외만 포착합니다. 
+
+```kotlin
+fun transparentCatch(): Flow<Int> = flow {
+    for (i in 1..3) {
+        println("Emitting $i")
+        emit(i)
+    }
+}
+
+fun main() = runBlocking<Unit> {
+    transparentCatch()
+        .catch { e -> println("Catch $e") }
+        .collect { value ->
+            check(value <= 1) { "Collected $value"}
+            println(value)
+        }
+}
+```
+
+catch 연산자가 있음에도 "Cath ..." 메시지가 출력되지 않습니다. 
+```
+Emitting 1
+1
+Emitting 2
+Exception in thread "main" java.lang.IllegalStateException: Collected 2
+```
+
+#### Catching declaratively
+```collect``` 연산자를 ```onEach```로 옮겨서 그것을 ```catch``` 연산자 앞에 두면 모든 예외를 처리하는 부분과 ```catch```연산자의 동작 부분을 결합할 수 있습니다. 이 flow의 수집은 매개변수 없이 ```collect()```를 호출하여 작동 시켜야 합니다.
+
+```kotlin
+fun catching(): Flow<Int> = flow {
+    for (i in 1..3) {
+        println("Emitting $i")
+        emit(i)
+    }
+}
+
+fun main() = runBlocking<Unit> {
+    catching()
+        .onEach { value ->
+            check(value <= 1) { "Collected $value"}
+            println(value)
+        }
+        .catch { e -> println("Catch $e") }
+        .collect()
+}
+```
+
+이제 "Caught ..." 메시지가 출력되어 명시적으로 try/catch 블록을 사용하지 않고도 모든 예외를 catch할 수 있습니다.
+```
+Emitting 1
+1
+Emitting 2
+Catch java.lang.IllegalStateException: Collected 2
+```
