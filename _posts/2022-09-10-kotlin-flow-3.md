@@ -1,5 +1,5 @@
 ---
-title: "Asynchronous Flow Flows 알아보기 3"
+title: "Asynchronous Flow 알아보기 3"
 excerpt: "가깝고 먼 Asynchronous Flow 알아보기 3편"
 
 categories:
