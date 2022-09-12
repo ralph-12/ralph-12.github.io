@@ -3,11 +3,11 @@ title: "ktlint 쉽게 적용하기"
 excerpt: "kotlin 공식 코드 스타일로 검사하는 ktlint 쉽게 적용하기"
 
 categories:
-  - Kotlin
+  - Android
 tags:
-  - [Kotlin]
+  - [Android]
 
-permalink: /kotlin/ktlint-setup/
+permalink: /android/ktlint-setup/
 
 toc: true
 toc_sticky: true
