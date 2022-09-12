@@ -401,3 +401,63 @@ Flow completed with java.lang.IllegalStateException: Collected 2
 Exception in thread "main" java.lang.IllegalStateException: Collected 2
 at ...
 ```
+
+### Imperative versus declarative
+ flow를 수집하는 방법과 명령적 방법과 선언적 방법으로 완료와 예외를 처리하는 방법을 알았습니다.
+두 가지 방법 중 코드 스타일이나 선호도에 따라 선택하여 사용하면 됩니다.
+
+### Launching flow 
+flow를 사용하여 일부 소스에서 오는 비동기 이벤트를 처리하는 것은 쉽습니다. 이 경우에 들어오는 이벤트에 대한 방법으로 
+코드를 작성하고 추가 작업을 계속하는 ```addEventListener```함수의 유사체가 필요합니다.
+
+```onEach```가 이 역할을 수행할 수 있지만 flow를 수집하려면 terminal 연산자도 필요합니다. 그렇지 않으면 ```onEach```를 호출하는 것만으로는 효과가 없습니다.
+
+```onEach``` 다음에 collet terminal 연산자를 사용하면 그 뒤의 코드는 flow가 수집될 때까지 기다립니다.
+
+```kotlin
+// Imitate a flow of events
+fun events(): Flow<Int> = (1..3).asFlow().onEach { delay(100) }
+
+fun main() = runBlocking<Unit> {
+    events()
+        .onEach { event -> println("Event : $event") }
+        .collect() // <--- Collecting the flow
+    println("Done")
+}
+```
+아래와 같이 출력합니다. 
+```
+Event : 1
+Event : 2
+Event : 3
+Done
+```
+
+launchIn terminal 연산자는 편리하게 사용할 수 있습니다.
+collect를 launchIn으로 대체하여 별도의 코루틴에서 flow 컬렉션을 시작할 수 있으므로 추가 코드 실행이 즉시 계속됩니다.
+
+```kotlin
+fun launchInEvents(): Flow<Int> = (1..3).asFlow().onEach { delay(100) }
+
+fun main() = runBlocking<Unit> {
+    launchInEvents()
+        .onEach { event -> println("Event: $event") }
+        .launchIn(this) // <--- Launching the flow in a separate coroutine
+    println("Done")
+}
+```
+
+```
+Done
+Event: 1
+Event: 2
+Event: 3
+```
+
+```launchIn```에 대한 필수 매개변수는 flow를 수집할 ```coroutine```의 범위 ```CoroutineScope```를 지정해야 합니다.
+위의 예에서 이 범위는 ```runBlocking``` 코루틴 빌더에서 가져오므로 flow가 실행되는 동안 ```runBlocking``` 범위는 자식 ```coroutine```이 완료될 때까지 대기하고 주 함수가 이 예를 반환하고 종료하지 않도록 합니다.
+
+실제 어플리케이션에서 범위는 수명이 제한된 엔티티로 부터 가져옵니다. 이 엔티티의 라이프사이클이 종료되는 즉시 해당 범위가 취소되고 해당 flow의 수집이 취소됩니다.
+
+```launchIn```은 또한 전체 범위를 취소하거나 조인하지 않고 해당 flow 수집 코루틴을 취소하는 데 사용할 수 있는 ```Job```을 반환합니다.
+ 
