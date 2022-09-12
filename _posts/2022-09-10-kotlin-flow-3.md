@@ -1,6 +1,6 @@
 ---
-title: "Kotlin Flows 알아보기 3"
-excerpt: "가깝고 먼 Kotlin Flows 알아보기 3편"
+title: "Asynchronous Flow Flows 알아보기 3"
+excerpt: "가깝고 먼 Asynchronous Flow 알아보기 3편"
 
 categories:
   - Kotlin
