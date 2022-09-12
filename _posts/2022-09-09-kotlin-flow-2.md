@@ -7,7 +7,7 @@ categories:
 tags:
   - [Kotlin]
 
-permalink: /kotlin/kotlin-flow-2/
+permalink: /kotlin/asynchronous-flow-2/
 
 toc: true
 toc_sticky: true
