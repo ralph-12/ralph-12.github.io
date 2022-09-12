@@ -316,3 +316,63 @@ Emitting 1
 Emitting 2
 Catch java.lang.IllegalStateException: Collected 2
 ```
+
+### Flow completion
+flow 수집이 완료되면 (일반적으로 또는 예외적으로) 작업을 실행해야 할 수 있습니다. 명령형과 선언형의 두 가지 방법으로 수행할 수 있습니다.
+
+#### Imperative finally block
+try/catch 외에도 finally 블록을 사용하여 수집 완료 시 작업을 실행할 수도 있습니다.
+
+```kotlin
+fun simple(): Flow<Int> = (1..3).asFlow()
+
+fun main() = runBlocking<Unit> {
+    try {
+        simple().collect { value -> println(value) }
+    } finally {
+        println("Done")
+    }
+}
+```
+
+이 코드는 1부터 3까지 차례대로 출력 후 finally {...} 문의 "Done"을 출력합니다. 
+```
+1
+2
+3
+Done
+```
+
+#### Declarative handling
+
+선언적 접근 방식에서는 flow가 완전히 collect 되었을 때 호출되는 ```onCompletion```이라는 중간 연산자를 가지고 있습니다.
+
+이전 예제를 ```onCompletion``` 연산자를 사용하여 다시 작성하겠습니다.
+
+```kotlin
+simple()
+    .onCompletion { println("Done") }
+    .collect { value -> println(value) }
+```
+
+
+```kotlin
+fun declarativeSimple(): Flow<Int> = flow {
+    emit(1)
+    throw RuntimeException()
+}
+
+fun main() = runBlocking<Unit> {
+    declarativeSimple()
+        .onCompletion { cause -> if (cause != null) println("Flow completed exceptionally") }
+        .catch { cause -> println("Caught exception") }
+        .collect { value -> println(value) }
+}
+```
+```onCompletion```의 이점은 flow 수집이 정상적으로 완료되었는지 또는 예외적으로 완료되었는지 여부를 결정하는데 사용하는 람다의 ```nullble```한 ```Throwable``` 매개변수입니다.
+예제는 숫자 1을 방출한 후 예외를 발생시킵니다. 
+```
+1
+Flow completed exceptionally
+Caught exception
+```
