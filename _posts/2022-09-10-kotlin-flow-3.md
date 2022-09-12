@@ -376,3 +376,28 @@ fun main() = runBlocking<Unit> {
 Flow completed exceptionally
 Caught exception
 ```
+
+#### Successful completion
+
+```catch``` 연산자와의 또 다른 차이점은 onCompletion이 모든 예외를 확인하고 업스트림 flow가 성공적으로 완료된 경우에만(취소 또는 실패 없이) null 예외를 수신한다는 것입니다.
+
+```kotlin
+fun successfulCompletion(): Flow<Int> = (1..3).asFlow()
+
+fun main() = runBlocking<Unit> {
+    successfulCompletion()
+        .onCompletion { cause -> println("Flow completed with $cause")  }
+        .collect { value ->
+            check(value <= 1) { "Collected $value"}
+            println(value)
+        }
+}
+```
+
+다운스트림 예외로 인해 flow가 중단되었기 때문에 완료 원인이 null이 아님을 알 수 있습니다.
+```
+1
+Flow completed with java.lang.IllegalStateException: Collected 2
+Exception in thread "main" java.lang.IllegalStateException: Collected 2
+at ...
+```
