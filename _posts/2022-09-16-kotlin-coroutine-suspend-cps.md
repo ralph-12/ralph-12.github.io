@@ -16,4 +16,6 @@ date: 2022-09-16
 last_modified_at: 2022-09-16
 ---
 
+<img src="/assets/images/posts_img/kotlin-coroutine-suspend-cps/acton-crawford-A4xwAcZOAyo-unsplash.jpg" width="600">
+[Photo by Acton Crawford](https://unsplash.com/photos/A4xwAcZOAyo)
 
