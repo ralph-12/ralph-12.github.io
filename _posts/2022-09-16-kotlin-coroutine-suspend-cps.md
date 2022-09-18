@@ -121,7 +121,7 @@ User 정보를 가져와 User 요약으로 변환해주는 코드가 있다고 �
 
 ### Labels
 
-```Coroutine```의 빌더 구문에서 순차적으로 작성한 코드들은 디컴파일할 때 Labels이 생성되게 됩니다.
+```Coroutine```의 빌더 구문에서 순차적으로 작성한 코드들은 디컴파일할 때 ```Labels```이 생성되게 됩니다.
 아래의  ```switch```문이 보이시나요?
 
 ```java
@@ -151,3 +151,7 @@ switch(this.label) {
 ### 마무리 
 정리하자면 ```Suspend function```은 내부적으로 Lable를 매기고 ```switch case```문 형태로 만들어져서 
 ```CPS Callback Interface``` 형태로 이루어짐을 알수 있습니다. 
+-- -- 
+
+#### References
+[새차원 - Coroutines under the hood](https://youtu.be/DOXyH1RtMC0)
