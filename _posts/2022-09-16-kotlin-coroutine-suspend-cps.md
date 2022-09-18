@@ -1,6 +1,6 @@
 ---
-title: "Coroutine 내부 들어다보기"
-excerpt: "Suspend 함수의 동작의 비밀"
+title: "Coroutine Suspend 내부 들여다보기"
+excerpt: "Suspend 함수의 동작과 Continuation Passing Style"
 
 categories:
   - Kotlin
