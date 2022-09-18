@@ -20,11 +20,15 @@ last_modified_at: 2022-09-16
 [Photo by Acton Crawford](https://unsplash.com/photos/A4xwAcZOAyo)
 
 
-## Suspend function 
-```Coroutine```를 학습한 사람이라면 모두 들어봤을 ```Suspend function```,
-기본적으로 ```Coroutine```은 순차적으로 수행하며 일시중단이 가능합니다. ```Coroutine```은 기존의 ```Callback``` 지옥에서 벗어나게 해준 고마운 존재입니다. 이런 ```coroutine```에서 ```Suspend keyword```를 붙이게 되면 일시 중단 작업이 가능한 함수로 만들수 있는데요.
+## Suspend function
 
-```Suspend function```은 도대체 어떻게 구현이 되었길래 이게 가능할까요? 
+```Coroutine```를 학습한 사람이라면 모두 들어봤을 ```Suspend function```, 기본적으로 ```Coroutine```은 순차적으로 수행하며 일시중단이 가능합니다. 
+```Coroutine```은 기존의 ```Callback``` 지옥에서 벗어나게 해준 고마운 존재입니다. 
+이런 ```Coroutine```에 ```Suspend keyword```를 붙이게 되면 일시 중단 작업이 가능한 함수로 만들수 있는데요.
+
+
+```Suspend function```은 내부적으로 어떻게 구현이 되었길래 이게 가능할까요? 
+
 
 JetBrains의 컨퍼런스 2017에서 ```Roman Elizarov```은 이렇게 말했습니다. 
 
@@ -32,13 +36,22 @@ JetBrains의 컨퍼런스 2017에서 ```Roman Elizarov```은 이렇게 말했습
 
 [KotlinConf 2017](https://youtu.be/YrrUCSi72E8)
 
-```Coroutine```에서 이런 동작은 마법이 아닌 일반 코드일 뿐이라는 겁니다. 
+```
+There is no magic 
+```
+
+```Coroutine```에서 이런 동작은 마법이 아닌 일반 코드일 뿐이라는 겁니다.
+
+더 자세히 살펴보도록 하겠습니다. 
 
 ### Continuation Passing Style
 
-더 자세히 살펴보겠습니다. ```Continuation Passing Style``` 일명 ```CPS``를 들어보셨나요? ```Suspend keyword```가 붙은 함수는 컴파일러는 ```Continuation```을 구현한 코드로 변경해 줍니다. 
+```Suspend keyword```가 붙은 함수를 컴파일러는 ```Continuation```을 구현한 코드로 변경해 줍니다. 
+```Continuation Passing Style``` 일명 ```CPS```로 변환해주는 것입니다. 
+
 
 ```Continuation```의 인터페이스를 확인해보면 아래와 같습니다.
+
 
 ```kotlin
 /**
@@ -83,7 +96,7 @@ fun converterUser(userData: UserData): String = "이름은 ${userData.name}, {$u
 suspend fun fetchUserSummery(description: String): UserSummery = UserSummery(description)
 ```
 
-user 정보를 가져와 user 요약으로 변환해주는 코드가 있다고 해보겠습니다. 
+User 정보를 가져와 User 요약으로 변환해주는 코드가 있다고 해보겠습니다. 
 
 이를 Bytecode로 변환해보겠습니다.
 
@@ -137,5 +150,6 @@ switch(this.label) {
 ...
 ```
 
+### 마무리 
 정리하자면 ```Suspend function```은 내부적으로 Lable를 매기고 ```switch case```문 형태로 만들어져서 
 ```CPS Callback Interface``` 형태로 이루어짐을 알수 있습니다. 
