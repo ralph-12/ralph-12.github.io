@@ -65,3 +65,77 @@ public interface Continuation<in T> {
 이제 JVM이 ```Suspend function```를 분석하는 방식을 알아봅시다. 
 
 
+아래 간단한 코드를 작성해 보겠습니다. 
+
+```kotlin
+fun main() = runBlocking<Unit> {
+    GlobalScope.launch {
+        val profile = fetchUser()
+        val convertUser = converterUser(profile)
+        fetchUserSummery(convertUser)
+    }
+}
+
+suspend fun fetchUser() = UserData(199212,  "테스트", 30)
+
+fun converterUser(userData: UserData): String = "이름은 ${userData.name}, {$userData.age}살 입니다."
+
+suspend fun fetchUserSummery(description: String): UserSummery = UserSummery(description)
+```
+
+user 정보를 가져와 user 요약으로 변환해주는 코드가 있다고 해보겠습니다. 
+
+이를 Bytecode로 변환해보겠습니다.
+
+```java
+  @Nullable
+   public static final Object fetchUser(@NotNull Continuation $completion) {
+      return new UserData(199212, "테스트", 30);
+   }
+
+   @Nullable
+   public static final Object converterUser(@NotNull UserData userData, @NotNull Continuation $completion) {
+      return "이름은 " + userData.getName() + ", {" + userData + ".age}살 입니다.";
+   }
+
+   @NotNull
+   public static final UserSummery fetchUserSummery(@NotNull String description) {
+      Intrinsics.checkNotNullParameter(description, "description");
+      return new UserSummery(description);
+   }
+   
+```
+일반함수로 변환되었으며 ```Continuation Passing Style```로 변환 된 것으로 확인 할 수 있습니다. 
+
+
+### Labels
+
+```Coroutine```의 빌더 구문에서 순차적으로 작성한 코드들은 디컴파일할 때 Labels이 생성되게 됩니다.
+아래의  ```switch```문이 보이시나요?
+
+```java
+switch(this.label) {
+  case 0:
+    ResultKt.throwOnFailure($result);
+    this.label = 1;
+    var10000 = Example_cpsKt.fetchUser(this);
+    if (var10000 == var4) {
+    return var4;
+    }
+    break;
+  case 1:
+    ResultKt.throwOnFailure($result);
+    var10000 = $result;
+    break;
+  case 2:
+    ResultKt.throwOnFailure($result);
+    var10000 = $result;
+    break label17;
+  default:
+    throw new IllegalStateException("call to 'resume' before 'invoke' with coroutine");
+  }
+...
+```
+
+정리하자면 ```Suspend function```은 내부적으로 Lable를 매기고 ```switch case```문 형태로 만들어져서 
+```CPS Callback Interface``` 형태로 이루어짐을 알수 있습니다. 
