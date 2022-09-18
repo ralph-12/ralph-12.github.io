@@ -36,11 +36,9 @@ JetBrains의 컨퍼런스 2017에서 ```Roman Elizarov```은 이렇게 말했습
 
 [KotlinConf 2017](https://youtu.be/YrrUCSi72E8)
 
-```
-There is no magic 
-```
 
 ```Coroutine```에서 이런 동작은 마법이 아닌 일반 코드일 뿐이라는 겁니다.
+
 
 더 자세히 살펴보도록 하겠습니다. 
 
