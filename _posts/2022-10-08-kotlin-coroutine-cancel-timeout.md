@@ -120,9 +120,9 @@ doCount Done!
 10
 ```
 
-###Cancel(), join()
+### Cancel(), join()
 
-위의 예제에 join()를 추가해 어떻게 동작하는지 확인해 보겠습니다. 
+위의 예제에 ```join()```를 추가해 어떻게 동작하는지 확인해 보겠습니다. ```join```은 동작이 끝날때 까지 ```Coroutine````를 기다리게 해줍니다.
 
 ```kotlin
 suspend fun cancelAndJoinExample() = coroutineScope {
@@ -171,4 +171,41 @@ doCount Done!
 
 ```kotlin
 job1.cancelAndJoin()
+```
+
+하지만 진정한 의미로 ```Coroutine```이 취소되지 않았습니다. 
+
+### isActive
+
+isActive는 ```Coroutine```이 활성화 되어있는지 확인할 수 있습니다.
+위의 예제에 isActive를 추가해 보겠습니다. 
+
+```kotlin
+suspend fun cancelAndJoinExample() = coroutineScope {
+    val job1 = launch(Dispatchers.Default) {
+        var i = 1
+        var nextTime = System.currentTimeMillis() + 100L
+
+        while (i <= 10 && isActive) {
+            val currentTime = System.currentTimeMillis()
+            if (currentTime >= nextTime) {
+                println(i)
+                nextTime = currentTime + 100L
+                i++
+            }
+        }
+    }
+
+    delay(200L)
+    job1.cancelAndJoin()
+    println("doCount Done!")
+}
+```
+
+```Coroutine```의 활성 상태를 알아내 반복문을 취소했음을 알 수 있습니다.
+
+```
+1
+2
+doCount Done!
 ```
