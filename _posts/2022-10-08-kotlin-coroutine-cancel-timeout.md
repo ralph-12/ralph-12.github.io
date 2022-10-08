@@ -54,3 +54,16 @@ fun main() = runBlocking {
     println("5!")
 }
 ``` 
+suspension point로 delay를 800L 만큼 주었기 때문에 1000L만큼 suspension point가 있는 job1만 출력하지 못한 것을 
+알 수 있습니다. 
+
+```
+launch1: main
+launch2: main
+2!
+launch3: main
+3!
+4!
+runBlocking: main
+5!
+```
