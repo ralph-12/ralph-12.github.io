@@ -24,7 +24,7 @@ last_modified_at: 2023-05-09
 ## Dart variables
 최근 `Flutter`를 이용해 개발을 해야해서 차근차근 `Dart`를 공부하고자 합니다.   
    
- ### var
+### var
  
  `Dart`는 아래와 같이 변수를 선언하고 초기화 할수 있습니다. 
  
