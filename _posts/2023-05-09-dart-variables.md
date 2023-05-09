@@ -16,13 +16,13 @@ date: 2023-05-09
 last_modified_at: 2023-05-09
 ---
 <img src="/assets/images/posts_img/dart/miikka-luotio-i3WlrO7oAHA-unsplash.jpg" width="600">
-[Photo by Zichao Zhang](https://unsplash.com/photos/ZAbIO5eas9Q)  
-
-최근 `Flutter`를 이용해 개발을 해야해서 차근차근 `Dart`를 공부하고자 합니다.  
+[Photo by Miikka Luotio](https://unsplash.com/ko/%EC%82%AC%EC%A7%84/i3WlrO7oAHA)  
+  
+  
 
 
 ## Dart variables
-   
+최근 `Flutter`를 이용해 개발을 해야해서 차근차근 `Dart`를 공부하고자 합니다.   
    
  ### var
  
@@ -80,7 +80,7 @@ const API_KEY = 'DFDFDFDADFASD'; // compile time에 값을 결정합니다.
 ### Null safety
 `Null safety`는 null로 인한 run-time 에러를 방지하고 edit-time에서 에러를 내어 안전성을 확보합니다.  
 
-`Dart`는 기본적으로 변수에 null을 할당 할수 없습니다. 하지만 `?`를 붙여서 예외적으로 null을 허용할 수 있습니다.
+`Dart`는 기본적으로 변수에 null을 할당 할수 없습니다. 그러나 `?`를 붙여서 예외적으로 null을 허용할 수 있습니다.
 
 ``` dart
 String? name = 'ralral-phph';
