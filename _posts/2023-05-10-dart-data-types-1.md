@@ -5,7 +5,7 @@ excerpt: "Dart data 기본 types 톺아보기"
 categories:
   - Dart
 tags:
-  - [Dart data types]
+  - [Dart data types-1]
 
 permalink: /dart/dart-data-types-1/
 
