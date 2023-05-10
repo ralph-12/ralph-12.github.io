@@ -15,7 +15,7 @@ toc_sticky: true
 date: 2023-05-10
 last_modified_at: 2023-05-10
 ---
-<img src="assets/images/posts_img/dart/mick-haupt-3UbsiRcrFV4-unsplash.jpg" width="600">
+<img src="/assets/images/posts_img/dart/mick-haupt-3UbsiRcrFV4-unsplash.jpg" width="600">
 [Photo by Mick Haupt](https://unsplash.com/ko/%EC%82%AC%EC%A7%84/3UbsiRcrFV4)  
 
 ## Dart data types
