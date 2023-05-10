@@ -1,6 +1,6 @@
 ---
 title: "Dart variables"
-excerpt: "Dart variables"
+excerpt: "Dart 변수 훔쳐보기"
 
 categories:
   - Dart
