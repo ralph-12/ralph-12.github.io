@@ -1,19 +1,19 @@
 ---
-title: "Dart data types-1"
+title: "Dart data types"
 excerpt: "Dart data 기본 types 톺아보기"
 
 categories:
   - Dart
 tags:
-  - [Dart data types-1]
+  - [Dart data types]
 
-permalink: /dart/dart-data-types-1/
+permalink: /dart/dart-data-types/
 
 toc: true
 toc_sticky: true
 
 date: 2023-05-10
-last_modified_at: 2023-05-10
+last_modified_at: 2023-05-12
 ---
 <img src="/assets/images/posts_img/dart/mick-haupt-3UbsiRcrFV4-unsplash.jpg" width="600">
 [Photo by Mick Haupt](https://unsplash.com/ko/%EC%82%AC%EC%A7%84/3UbsiRcrFV4)  
