@@ -1,13 +1,13 @@
 ---
-title: "Dart data types-2"
+title: "Dart Collections"
 excerpt: "Dart의 Collections"
 
 categories:
   - Dart
 tags:
-  - [Dart data types-2]
+  - [Dart Collections]
 
-permalink: /dart/dart-data-types-2/
+permalink: /dart/dart-collections/
 
 toc: true
 toc_sticky: true
