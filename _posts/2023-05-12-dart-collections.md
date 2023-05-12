@@ -1,11 +1,11 @@
 ---
-title: "Dart Collections"
-excerpt: "Dart의 Collections"
+title: "Dart collections"
+excerpt: "Dart의 collections List, Set, Map"
 
 categories:
   - Dart
 tags:
-  - [Dart Collections]
+  - [Dart collections]
 
 permalink: /dart/dart-collections/
 
