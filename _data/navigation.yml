@@ -22,6 +22,8 @@ categories:
     url: /categories/android/
   - title: "Kotlin"
     url: /categories/kotlin/
+  - title: "Flutter"
+    url: /categories/flutter/
   - title: "Dart"
     url: /categories/dart/
   - title: "Data Structure"
